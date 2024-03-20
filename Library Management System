@@ -1,0 +1,127 @@
+// LibraryItem interface
+interface LibraryItem {
+    void borrowItem();
+    void returnItem();
+    boolean isBorrowed();
+}
+
+class Book implements LibraryItem {
+    private String title;
+    private String author;
+    private int publicationYear;
+    private boolean borrowed;
+
+    public Book(String title, String author, int publicationYear) {
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.borrowed = false;
+    }
+
+    @Override
+    public void borrowItem() {
+        borrowed = true;
+        System.out.println("Book \"" + title + "\" has been borrowed.");
+    }
+
+    @Override
+    public void returnItem() {
+        borrowed = false;
+        System.out.println("Book \"" + title + "\" has been returned.");
+    }
+
+    @Override
+    public boolean isBorrowed() {
+        return borrowed;
+    }
+}
+
+class DVD implements LibraryItem {
+    private String title;
+    private String director;
+    private int runningTime;
+    private boolean borrowed;
+
+    public DVD(String title, String director, int runningTime) {
+        this.title = title;
+        this.director = director;
+        this.runningTime = runningTime;
+        this.borrowed = false;
+    }
+
+    @Override
+    public void borrowItem() {
+        borrowed = true;
+        System.out.println("DVD \"" + title + "\" has been borrowed.");
+    }
+
+    @Override
+    public void returnItem() {
+        borrowed = false;
+        System.out.println("DVD \"" + title + "\" has been returned.");
+    }
+
+    @Override
+    public boolean isBorrowed() {
+        return borrowed;
+    }
+}
+
+// mao ni abstract class
+abstract class LibraryUser {
+    public void borrowItem(LibraryItem item) {
+        if (!item.isBorrowed()) {
+            item.borrowItem();
+            System.out.println("Item borrowed successfully.");
+        } else {
+            System.out.println("Item is already borrowed.");
+        }
+    }
+
+    public void returnItem(LibraryItem item) {
+        if (item.isBorrowed()) {
+            item.returnItem();
+            System.out.println("Item returned successfully.");
+        } else {
+            System.out.println("Item is not borrowed.");
+        }
+    }
+
+    abstract void printItemsBorrowed();
+}
+
+class Student extends LibraryUser {
+    @Override
+    void printItemsBorrowed() {
+        System.out.println("Items borrowed by student:");
+        // Implementation to print items borrowed by student
+    }
+}
+
+class Teacher extends LibraryUser {
+    @Override
+    void printItemsBorrowed() {
+        System.out.println("Items borrowed by teacher:");
+        // Implementation to print items borrowed by teacher
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        // Create Book and DVD objects
+        Book book = new Book("Java Programming", "John Doe", 2022);
+        DVD dvd = new DVD("The Matrix", "Wachowskis", 136);
+
+        // Create Student and Teacher objects
+        Student student = new Student();
+        Teacher teacher = new Teacher();
+
+        // Demonstrate borrowing and returning items
+        student.borrowItem(book);
+        teacher.borrowItem(dvd);
+
+        student.returnItem(book);
+        teacher.returnItem(dvd);
+    }
+}
